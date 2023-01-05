@@ -1,7 +1,10 @@
 from flask import Flask
 from sqlalchemy_utils.functions import database_exists, create_database
+
+from controllers.userController import UserController
 from models.database import db
-from routes.user_bp import UserBlueprint
+
+# from routes.user_bp import UserBlueprint
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:password@localhost:3306/ir_pj'
@@ -15,9 +18,9 @@ with app.app_context():
     db.create_all()
 
 
-class FlaskApp:
-    app.register_blueprint(UserBlueprint.user_bp)
-
+@app.route('/login', methods=['POST'])
+def TEST():
+    return UserController.login()
 
 
 if __name__ == '__main__':
