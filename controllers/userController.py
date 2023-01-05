@@ -17,11 +17,8 @@ class UserController:
                 return jsonify({'message': 'username, and password cannot be null'}), 400
             try:
                 user = User.query.filter_by(username=username).first()
-                if bcrypt.checkpw(password.encode('utf-8'), bytes(user.password, 'utf-8')):
-                    user_serialize = user.serialize
-                    token = jwt.encode(
-                        {'user': user_serialize, }, 'Bearer')
-                    return jsonify({'user': user_serialize, 'token': token}), 200
+                if password == user.password:
+                    return jsonify({'message': 'you are login'}), 200
                 raise
             except:
                 return jsonify({'message': 'username or password is incorrect'}), 401
