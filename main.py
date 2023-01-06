@@ -1,13 +1,13 @@
 from flask import Flask
 from sqlalchemy_utils.functions import database_exists, create_database
-
 from controllers.userController import UserController
 from models.database import db
-
-# from routes.user_bp import UserBlueprint
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:password@localhost:3306/ir_pj'
+CORS(app, resources={r'/*': {'origins': '*'}})
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:password@127.0.0.1:3306/ir_pj'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 if not database_exists(app.config["SQLALCHEMY_DATABASE_URI"]):
     create_database(app.config["SQLALCHEMY_DATABASE_URI"])
@@ -19,7 +19,7 @@ with app.app_context():
 
 
 @app.route('/login', methods=['POST'])
-def TEST():
+def UserLogin():
     return UserController.login()
 
 
