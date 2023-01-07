@@ -4,9 +4,10 @@ from .user import User
 from .database import db
 
 
-@event.listens_for(User.__table__ , 'after_create')
+@event.listens_for(User.__table__, 'after_create')
 def create_user(*args, **kwargs):
     db.session.add(
-        User(username='koonlookhin', password=bcrypt.hashpw('1234567'.encode('utf-8'), bcrypt.gensalt(10)),
-             firstname='krit', lastname='tipnuan', email='lookhinganthe@hotmail.com'))
+        User(username='koonlookhin', password=bcrypt.hashpw('123456'.encode('utf-8'), bcrypt.gensalt(10)),
+             email='lookhinganthe@hotmail.com',
+             bookmark=None, favorite=None))
     db.session.commit()
