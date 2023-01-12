@@ -1,7 +1,7 @@
 import pandas as pd
 import string
 import pickle
-
+import numpy as np
 
 def clean_data(path):
     df = pd.read_json(path, orient='records')
@@ -32,14 +32,14 @@ def clean_data(path):
     df['background'] = cleaned_background
 
     cleaned_score = df['score']
-    cleaned_score = cleaned_score.apply(lambda x: x.lower() if x is str else 0)
+    cleaned_score = cleaned_score.replace(np.NaN, 0)
     df['score'] = cleaned_score
 
     cleaned_scored_by = df['scored_by']
-    cleaned_scored_by = cleaned_scored_by.apply(lambda x: x.lower() if x is str else 0)
+    cleaned_scored_by = cleaned_scored_by.replace(np.NaN, 0)
     df['scored_by'] = cleaned_scored_by
 
-    pickle.dump(df, open('E:/Compo-work/ir_pj_backend/assets/parsed_data3.pkl', 'wb'))
+    pickle.dump(df, open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'wb'))
     return df
 
 
