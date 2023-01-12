@@ -29,5 +29,10 @@ def search():
     return AnimeSearch.search_title()
 
 
+@app.route('/search_description', methods=['POST'])
+def search_description():
+    return AnimeSearch.search_description()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
