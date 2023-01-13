@@ -1,14 +1,14 @@
 from .database import db
-
-
+from sqlalchemy import ARRAY
+from sqlalchemy import String
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
-    favorite = db.Column(db.Integer, nullable=True)
-    bookmark = db.Column(db.Integer, nullable=True)
+    favorite = db.Column(db.String(255), nullable=True)
+    bookmark = db.Column(db.String(255), nullable=True)
 
     def __init__(self, username, password, email, bookmark,favorite):
         self.username = username

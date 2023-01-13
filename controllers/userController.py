@@ -27,3 +27,11 @@ class UserController:
                 return jsonify({'message': 'username or password is incorrect'}), 401
         except:
             return jsonify({'message': 'The request body required username, password'}), 400
+
+    @staticmethod
+    def add_bookmark():
+        username = request.get_json()['username']
+        anime = request.get_json()['anime']
+        user = User.query.filter_by(username=username).first()
+        user_serialize = user.serialize
+        return user_serialize

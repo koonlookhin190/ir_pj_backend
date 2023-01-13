@@ -34,5 +34,10 @@ def search_description():
     return AnimeSearch.search_description()
 
 
+@app.route('/add_bookmark', methods=['POST'])
+def add_bookmark():
+    return UserController.add_bookmark()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
