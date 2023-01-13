@@ -3,6 +3,7 @@ from sqlalchemy_utils.functions import database_exists, create_database
 from controllers.userController import UserController
 from models.database import db
 from flask_cors import CORS
+from controllers.animeController import AnimeSearch
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -21,6 +22,16 @@ with app.app_context():
 @app.route('/login', methods=['POST'])
 def UserLogin():
     return UserController.login()
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    return AnimeSearch.search_title()
+
+
+@app.route('/search_description', methods=['POST'])
+def search_description():
+    return AnimeSearch.search_description()
 
 
 if __name__ == '__main__':
