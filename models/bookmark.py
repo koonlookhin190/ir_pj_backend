@@ -21,3 +21,7 @@ class Bookmark(db.Model):
             'anime_id': self.anime_id,
             'score': self.score
         }
+
+    @staticmethod
+    def read_list(list):
+        return [m.serialize for m in list]

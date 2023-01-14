@@ -8,6 +8,7 @@ title = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/title.pkl', 'rb'))
 parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
 synopsis = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/synopsis.pkl', 'rb'))
 
+
 class AnimeSearch:
     @staticmethod
     def search_title():

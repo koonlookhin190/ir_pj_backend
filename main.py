@@ -5,6 +5,10 @@ from models import Bookmark
 from models.database import db
 from flask_cors import CORS
 from controllers.animeController import AnimeSearch
+import pandas as pd
+import pickle
+
+parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -46,14 +50,34 @@ def add_bookmark():
     return jsonify('Pass'), 200
 
 
-@app.route('/remove_bookmark', methods=['POST'])
+@app.route('/remove_bookmark', methods=['DELETE'])
 def delete_bookmark():
     user_id = request.get_json()['user_id']
     anime_id = request.get_json()['anime_id']
     save_bm = db.session.query(Bookmark).filter_by(user_id=user_id, anime_id=anime_id).first()
+    print(save_bm)
     db.session.delete(save_bm)
     db.session.commit()
     return jsonify('Delete'), 200
+
+
+@app.route('/getBookmark', methods=['POST'])
+def get_bookmark():
+    user_id = request.get_json()['user_id']
+    save_bookmark = db.session.query(Bookmark).filter_by(user_id=user_id).all()
+    save_bookmark = Bookmark.read_list(save_bookmark)
+    animes_bookmark = []
+    for i in save_bookmark:
+        temp = parsed_data[parsed_data['mal_id'] == i['anime_id']].to_dict('records')[0]
+        animes_bookmark.append(
+            {'mal_id': temp['mal_id'], 'title': temp['title'], 'images': temp['images'], 'score': i['score']})
+
+    animes_bookmark.sort(key=lambda x: x['score'], reverse=True)
+    return jsonify({'animes_bookmark': animes_bookmark}), 200
+
+
+def sort_key(animes_bookmark):
+    return animes_bookmark[2]
 
 
 if __name__ == '__main__':
