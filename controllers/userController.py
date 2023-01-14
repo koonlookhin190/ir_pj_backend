@@ -28,10 +28,11 @@ class UserController:
         except:
             return jsonify({'message': 'The request body required username, password'}), 400
 
-    @staticmethod
-    def add_bookmark():
-        username = request.get_json()['username']
-        anime = request.get_json()['anime']
-        user = User.query.filter_by(username=username).first()
-        user_serialize = user.serialize
-        return user_serialize
+    # @staticmethod
+    # def add_bookmark():
+    #     user_id = request.get_json()['user_id']
+    #     anime_id = request.get_json()['anime_id']
+    #     save_bm = Bookmark(user_id, anime_id)
+    #     db.session.add(save_bm)
+    #     db.session.commit()
+    #     return jsonify(test),200

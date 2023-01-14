@@ -13,6 +13,7 @@ class AnimeSearch:
     def search_title():
         query = request.get_json()['input']
         spell_corr = [spell.correction(w) for w in query.split()]
+        query = spell_corr[0]
         score = title.transform(query)
         df_bm = pd.DataFrame(data=parsed_data)
         df_bm['bm25'] = list(score)

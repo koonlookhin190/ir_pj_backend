@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from sqlalchemy_utils.functions import database_exists, create_database
 from controllers.userController import UserController
+from models import Bookmark
 from models.database import db
 from flask_cors import CORS
 from controllers.animeController import AnimeSearch
@@ -36,7 +37,23 @@ def search_description():
 
 @app.route('/add_bookmark', methods=['POST'])
 def add_bookmark():
-    return UserController.add_bookmark()
+    user_id = request.get_json()['user_id']
+    anime_id = request.get_json()['anime_id']
+    score = request.get_json()['score']
+    save_bm = Bookmark(user_id, anime_id, score)
+    db.session.add(save_bm)
+    db.session.commit()
+    return jsonify('Pass'), 200
+
+
+@app.route('/remove_bookmark', methods=['POST'])
+def delete_bookmark():
+    user_id = request.get_json()['user_id']
+    anime_id = request.get_json()['anime_id']
+    save_bm = db.session.query(Bookmark).filter_by(user_id=user_id, anime_id=anime_id).first()
+    db.session.delete(save_bm)
+    db.session.commit()
+    return jsonify('Delete'), 200
 
 
 if __name__ == '__main__':
