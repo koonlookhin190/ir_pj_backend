@@ -27,3 +27,12 @@ class UserController:
                 return jsonify({'message': 'username or password is incorrect'}), 401
         except:
             return jsonify({'message': 'The request body required username, password'}), 400
+
+    # @staticmethod
+    # def add_bookmark():
+    #     user_id = request.get_json()['user_id']
+    #     anime_id = request.get_json()['anime_id']
+    #     save_bm = Bookmark(user_id, anime_id)
+    #     db.session.add(save_bm)
+    #     db.session.commit()
+    #     return jsonify(test),200

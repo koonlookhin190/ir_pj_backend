@@ -8,11 +8,13 @@ title = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/title.pkl', 'rb'))
 parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
 synopsis = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/synopsis.pkl', 'rb'))
 
+
 class AnimeSearch:
     @staticmethod
     def search_title():
         query = request.get_json()['input']
         spell_corr = [spell.correction(w) for w in query.split()]
+        query = spell_corr[0]
         score = title.transform(query)
         df_bm = pd.DataFrame(data=parsed_data)
         df_bm['bm25'] = list(score)
