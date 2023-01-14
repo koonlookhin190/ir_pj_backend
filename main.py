@@ -50,7 +50,7 @@ def add_bookmark():
     return jsonify('Pass'), 200
 
 
-@app.route('/remove_bookmark', methods=['DELETE'])
+@app.route('/remove_bookmark', methods=['POST'])
 def delete_bookmark():
     user_id = request.get_json()['user_id']
     anime_id = request.get_json()['anime_id']
