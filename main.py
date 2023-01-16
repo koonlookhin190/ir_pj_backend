@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, request, jsonify
 from sqlalchemy_utils.functions import database_exists, create_database
 from controllers.userController import UserController
@@ -5,7 +6,7 @@ from models import Bookmark
 from models.database import db
 from flask_cors import CORS
 from controllers.animeController import AnimeSearch
-import pandas as pd
+# from controllers.suggestionController import make_user_feature, suggestion_u
 import pickle
 
 parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
@@ -76,8 +77,74 @@ def get_bookmark():
     return jsonify({'animes_bookmark': animes_bookmark}), 200
 
 
-def sort_key(animes_bookmark):
-    return animes_bookmark[2]
+# @app.route('/getSuggestion', methods=['POST'])
+# def suggestion():
+#     user_id = request.get_json()['user_id']
+#     save_bookmark = db.session.query(Bookmark).filter_by(user_id=user_id).all()
+#     save_bookmark = Bookmark.read_list(save_bookmark)
+#     keep_genere = ["Action",
+#                    "Drama",
+#                    "Action",
+#                    "Fantasy",
+#                    "Action",
+#                    "Adventure",
+#                    "Fantasy",
+#                    "Action",
+#                    "Adventure",
+#                    "Fantasy",
+#                    "Action"]
+#     genre_names = [
+#         'Action', 'Adventure', 'Comedy', 'Drama', 'Sci-Fi',
+#         'Game', 'Space', 'Music', 'Mystery', 'School', 'Fantasy',
+#         'Horror', 'Kids', 'Sports', 'Magic', 'Romance',
+#     ]
+#     score = [
+#         0, 0, 0, 0, 0,
+#         0, 0, 0, 0, 0, 0,
+#         0, 0, 0, 0, 0,
+#     ]
+#     df = pd.DataFrame({'category': genre_names, 'score': score})
+#
+#     for i in save_bookmark:
+#         temp = parsed_data[parsed_data['mal_id'] == i['anime_id']].to_dict('records')[0]
+#         for j in temp['genres']:
+#             keep_genere.append(j)
+#
+#     res = []
+#     for a in genre_names:
+#         # print(a)
+#         for k in keep_genere:
+#             if k == a:
+#                 res.append(k)
+#
+#     print(res)
+#
+#     for a in range(len(genre_names)):
+#         for k in df['category']:
+#             keep = 1
+#             for l in res:
+#                 if k == l:
+#                     df['score'].values[a] = keep
+#                     keep = keep+1
+
+#
+# return jsonify({'keep_genere': keep_genere}), 200
+
+
+# @app.route('/getSuggestion', methods=['POST'])
+# def suggestion():
+#     user_id = request.get_json()['user_id']
+#     save_bookmark = db.session.query(Bookmark).filter_by(user_id=user_id).all()
+#     save_bookmark = Bookmark.read_list(save_bookmark)
+#     df_book = pd.DataFrame(save_bookmark)
+#     print(df_book)
+#     df_book = df_book.drop(columns='id', axis=1)
+#     user_df = pd.DataFrame(df_book)
+#     print(user_df)
+#     user_df = make_user_feature(user_df)
+#     print(user_df)
+#     return jsonify({suggestion_u(user_df, 10, parsed_data, df_book)}),200
+#     # user_df = make_user_feature(user_df)
 
 
 if __name__ == '__main__':
