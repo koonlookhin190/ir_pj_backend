@@ -1,3 +1,4 @@
+import json
 import pickle
 from sklearn.model_selection import train_test_split
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +7,7 @@ import numpy as np
 import pandas as pd
 import lightgbm as lgb
 import matplotlib.pyplot as plt
+from flask import request, jsonify
 
 from models import Bookmark
 
@@ -14,7 +16,12 @@ db = SQLAlchemy()
 parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
 
 
-# def suggestion():
+def top_list():
+    df_tp = pd.DataFrame(data=parsed_data)
+    df_tp['keep'] = df_tp['popularity'].rank(ascending=False)
+    df_tp['popularity'] = df_tp['keep']
+    df_tp = df_tp.nlargest(columns='score', n=12)
+    return jsonify({'top_12': df_tp.to_dict('records')}), 200
 
 #
 # def make_user_feature(df):
@@ -96,4 +103,5 @@ parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.
 # # user_df = make_user_feature(user_df)
 # # print(user_df)
 # # suggestion_u(user_df, 10, parsed_data, df_book)
+
 

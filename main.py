@@ -6,7 +6,7 @@ from models import Bookmark
 from models.database import db
 from flask_cors import CORS
 from controllers.animeController import AnimeSearch
-# from controllers.suggestionController import make_user_feature, suggestion_u
+from controllers.suggestionController import top_list
 import pickle
 
 parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
@@ -145,6 +145,10 @@ def get_bookmark():
 #     print(user_df)
 #     return jsonify({suggestion_u(user_df, 10, parsed_data, df_book)}),200
 #     # user_df = make_user_feature(user_df)
+
+@app.route('/get_topList', methods=['GET'])
+def top_12():
+    return top_list()
 
 
 if __name__ == '__main__':
