@@ -21,7 +21,7 @@ def top_list():
     df_tp['keep'] = df_tp['popularity'].rank(ascending=False)
     df_tp['popularity'] = df_tp['keep']
     df_tp = df_tp.nlargest(columns='score', n=12)
-    return jsonify({'top_12': df_tp.to_dict('records')}), 200
+    return jsonify({'info': df_tp.to_dict('records')}), 200
 
 #
 # def make_user_feature(df):
