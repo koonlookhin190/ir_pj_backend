@@ -27,7 +27,9 @@ class AnimeSearch:
     def search_description():
         query = request.get_json()['input']
         spell_corr = [spell.correction(w) for w in query.split()]
-        score = synopsis.transform(query)
+        spell_corr = list(filter(None, spell_corr))
+        spell_corr = " ".join(spell_corr)
+        score = synopsis.transform(spell_corr)
         df_bm = pd.DataFrame(data=parsed_data)
         df_bm['bm25'] = list(score)
         df_bm['rank'] = df_bm['bm25'].rank(ascending=False)

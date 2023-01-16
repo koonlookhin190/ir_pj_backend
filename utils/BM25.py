@@ -33,13 +33,13 @@ class BM25(object):
         return (numer / denom).sum(1).A1
 
 
-if __name__ == '__main__':
-    parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data4.pkl', 'rb'))
+# if __name__ == '__main__':
+parsed_data = pickle.load(open('E:/Compo-work/ir_pj_backend/assets/parsed_data5.pkl', 'rb'))
 
-    bm25_title = BM25()
-    bm25_title.fit(parsed_data['title'])
-    pickle.dump(bm25_title, open('E:/Compo-work/ir_pj_backend/assets/title.pkl', 'wb'))
-
-    bm25_synopsis = BM25()
-    bm25_synopsis.fit(parsed_data['synopsis'])
-    pickle.dump(bm25_synopsis, open('E:/Compo-work/ir_pj_backend/assets/synopsis.pkl', 'wb'))
+# bm25_title = BM25()
+# bm25_title.fit(parsed_data['title'])
+# pickle.dump(bm25_title, open('E:/Compo-work/ir_pj_backend/assets/title.pkl', 'wb'))
+#
+# bm25_synopsis = BM25()
+# bm25_synopsis.fit(parsed_data['synopsis'])
+# pickle.dump(bm25_synopsis, open('E:/Compo-work/ir_pj_backend/assets/synopsis.pkl', 'wb'))
